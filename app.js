@@ -127,7 +127,7 @@ const getClassBaseBonus = () => {
 
   if (classChoice === "sharpshooter") {
     bonuses.as += 10;
-    bonuses.ms += 18;
+    bonuses.ms += 10;
   }
 
   return bonuses;
