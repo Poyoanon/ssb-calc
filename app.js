@@ -120,6 +120,16 @@ const getClassBaseBonus = () => {
     bonuses.ms += 30;
   }
 
+  if (classChoice === "machinist-bladesuit") {
+    bonuses.as += 35;
+    bonuses.ms += 30;
+  }
+
+  if (classChoice === "sharpshooter") {
+    bonuses.as += 10;
+    bonuses.ms += 18;
+  }
+
   return bonuses;
 };
 
