@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Supersonic Breakthrough Calculator</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <main class="page">
+      <header class="hero">
+        <div class="eyebrow">Lost Ark</div>
+        <h1>Supersonic Breakthrough Calculator</h1>
+        <p class="sub">
+          Enter your attack and movement speed to see how much Evolution Damage you gain
+          from Supersonic Breakthrough. The calculator uses capped values for the base
+          conversion and only counts overcap for the excess conversion.
+        </p>
+      </header>
+
+      <section class="grid">
+        <div class="card input-card">
+          <h2>Inputs</h2>
+
+          <div class="mode-section">
+            <div class="section-title">Class</div>
+            <div class="field">
+              <label for="classSelect">Class</label>
+              <select id="classSelect">
+                <option value="berserker-bt" selected>Berserker (Berserker's Technique)</option>
+                <option value="berserker-mayhem">Berserker (Mayhem)</option>
+                <option value="slayer">Slayer (Predator)</option>
+                <option value="wardancer">Wardancer (First Intention)</option>
+                <option value="aeromancer">Aeromancer (Wind Fury)</option>
+                <option value="guardianknight">Guardianknight (Dreadful Roar)</option>
+              </select>
+            </div>
+
+            <div class="class-section" data-class="guardianknight" hidden>
+              <div class="field">
+                <div class="field-hint">Guardianknight: permanent +15% AS.</div>
+              </div>
+            </div>
+
+            <div class="class-section" data-class="aeromancer" hidden>
+              <div class="field">
+                <div class="field-hint">Wind Fury: permanent +12% AS/MS.</div>
+              </div>
+            </div>
+
+            <div class="class-section" data-class="wardancer" hidden>
+              <div class="field">
+                <div class="field-hint">First Intention: permanent +20.8% AS.</div>
+              </div>
+            </div>
+
+            <div class="class-section" data-class="berserker-bt">
+              <div class="field">
+                <label for="spec">Specialization (BT only)</label>
+                <input
+                  id="spec"
+                  type="number"
+                  inputmode="decimal"
+                  min="0"
+                  step="1"
+                value="0"
+              />
+                <div class="field-hint">Formula: (1 + 0.26/699 * Spec) * 20%.</div>
+              </div>
+            </div>
+
+            <div class="class-section" data-class="berserker-mayhem" hidden>
+              <div class="field">
+                <div class="field-hint">Mayhem: permanent +15% AS/MS.</div>
+              </div>
+            </div>
+
+            <div class="class-section" data-class="slayer" hidden>
+              <div class="field">
+                <div class="field-hint">Predator: permanent +20% AS/MS.</div>
+              </div>
+            </div>
+
+
+            <div class="section-title">Sheet Values</div>
+            <div class="field">
+              <label for="sheetAs">Sheet AS % (no buffs)</label>
+              <input
+                id="sheetAs"
+                type="number"
+                inputmode="decimal"
+                min="100"
+                max="140"
+                step="0.01"
+                value="100"
+              />
+              <div class="field-hint">
+                From Full Effect Info > Attack, in town without buffs. Base is 100%.
+              </div>
+            </div>
+            <div class="field">
+              <label for="sheetMs">Sheet MS % (no buffs)</label>
+              <input
+                id="sheetMs"
+                type="number"
+                inputmode="decimal"
+                min="100"
+                max="140"
+                step="0.01"
+                value="100"
+              />
+              <div class="field-hint">
+                From Full Effect Info > Activity, in town without buffs. Base is 100%.
+              </div>
+            </div>
+
+            <div class="section-title">Shared Buffs</div>
+            <div class="field">
+              <label for="feast">Feast bonus % (0-5)</label>
+              <input
+                id="feast"
+                type="number"
+                inputmode="decimal"
+                min="0"
+                max="5"
+                step="0.1"
+                value="0"
+              />
+            </div>
+            <div class="field">
+              <label class="check-row" for="support">
+                <input type="checkbox" id="support" />
+                <span>Support buff (9% AS/MS)</span>
+              </label>
+            </div>
+
+            <div class="section-title">Consumables</div>
+            <div class="field">
+              <label>Wine bonus (3%)</label>
+              <div class="segmented segmented--three" role="radiogroup" aria-label="Wine bonus">
+                <label class="seg-item">
+                  <input type="radio" name="wine" value="none" checked />
+                  <span>None</span>
+                </label>
+                <label class="seg-item">
+                  <input type="radio" name="wine" value="atk" />
+                  <span>AS</span>
+                </label>
+                <label class="seg-item">
+                  <input type="radio" name="wine" value="move" />
+                  <span>MS</span>
+                </label>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="field">
+            <div class="label-row">
+              <label>Node Level</label>
+            </div>
+            <div class="segmented" role="radiogroup" aria-label="Node level">
+              <label class="seg-item">
+                <input type="radio" name="level" value="1" />
+                <span>Level 1</span>
+              </label>
+              <label class="seg-item">
+                <input type="radio" name="level" value="2" checked />
+                <span>Level 2</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="notes">
+            <p>
+              Base conversion uses capped bonus (up to 140). Excess conversion uses only the
+              amount above 140.
+            </p>
+            <p>Flat bonus activates once both speeds are at or above 140.</p>
+            <p>Total speed is 100 + the bonus % from your sources.</p>
+          </div>
+        </div>
+
+        <div class="card result-card">
+          <h2>Results</h2>
+
+          <div class="result-grid">
+            <div class="stat">
+              <div class="label">SSB Evolution Damage</div>
+              <div class="value" id="totalEvo">0%</div>
+              <div class="muted" id="totalCap">Max 24%</div>
+            </div>
+            <div class="stat">
+              <div class="label">Base Conversion</div>
+              <div class="value" id="baseEvo">0%</div>
+              <div class="muted">from capped bonus</div>
+            </div>
+            <div class="stat">
+              <div class="label">Flat Bonus</div>
+              <div class="value" id="flatEvo">0%</div>
+              <div class="muted">both speeds >= 140</div>
+            </div>
+            <div class="stat">
+              <div class="label">Excess Conversion</div>
+              <div class="value" id="excessEvo">0%</div>
+              <div class="muted">from overcap only</div>
+            </div>
+          </div>
+
+          <div class="progress">
+            <div class="progress-bar" id="progressBar"></div>
+            <div class="progress-text" id="progressText"></div>
+          </div>
+
+          <div class="split">
+            <div class="mini wide">
+              <div class="label">Total Speeds</div>
+              <div class="value" id="computedSpeeds">AS 140 / MS 140</div>
+              <div class="muted">uncapped totals</div>
+            </div>
+            <div class="mini">
+              <div class="label">Overcap Total</div>
+              <div class="value" id="overcapTotal">0%</div>
+              <div class="muted" id="overcapBreakdown">AS 0 / MS 0</div>
+            </div>
+            <div class="mini">
+              <div class="label">Overcap Needed</div>
+              <div class="value" id="neededExcess">26.66%</div>
+              <div class="muted">combined above 140</div>
+            </div>
+          </div>
+
+          <div class="breakpoints">
+            <div class="breakpoints-header">
+              <div class="label">Swiftness Breakpoints</div>
+            </div>
+            <div class="breakpoints-grid">
+              <div class="breakpoint">
+                <div class="label">Support + Feast + Wine</div>
+                <div class="value" id="bpFull">-</div>
+              </div>
+              <div class="breakpoint">
+                <div class="label">Support + Feast</div>
+                <div class="value" id="bpFeast">-</div>
+              </div>
+              <div class="breakpoint">
+                <div class="label">Support Only</div>
+                <div class="value" id="bpNone">-</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="callouts" id="callouts"></div>
+        </div>
+      </section>
+
+      <section class="card info-card">
+        <h2>How it is calculated</h2>
+          <div class="formula">
+            <code>Bonus (capped): max(min(speed, 140) - 100, 0)</code>
+            <code>Excess: max(speed - 140, 0)</code>
+            <code>Total speed: 100 + sum of bonuses</code>
+            <code>BT AS/MS: (1 + 0.26/699 * Spec) * 20%</code>
+            <code>Base: (bonusAS + bonusMS) * baseRate</code>
+            <code>Excess: (overAS + overMS) * excessRate</code>
+            <code>Total: min(base + flat + excess, maxEvo)</code>
+          </div>
+        <div class="legend">
+          <div><strong>Level 1</strong> base 5%, excess 15%, flat 4%, max 12%</div>
+          <div><strong>Level 2</strong> base 10%, excess 30%, flat 8%, max 24%</div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
