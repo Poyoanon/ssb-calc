@@ -226,8 +226,12 @@ const update = () => {
 
   totalEvoEl.textContent = `${fmt(totalEvo)}%`;
   totalCapEl.textContent = `Max ${levelConfig.maxEvo}%`;
-  baseEvoEl.textContent = `${fmt(baseEvo)}%`;
-  flatEvoEl.textContent = `${fmt(flatEvo)}%`;
+  if (baseEvoEl) {
+    baseEvoEl.textContent = `${fmt(baseEvo)}%`;
+  }
+  if (flatEvoEl) {
+    flatEvoEl.textContent = `${fmt(flatEvo)}%`;
+  }
   excessEvoEl.textContent = `${fmt(excessEvo)}%`;
   progressBarEl.style.width = `${progress}%`;
   progressTextEl.textContent = `${fmt(totalEvo)}% of ${levelConfig.maxEvo}% cap`;
@@ -238,7 +242,7 @@ const update = () => {
 
   const messages = [];
   if (atk < CAP || move < CAP) {
-    messages.push(`Raise both speeds to ${CAP}% to unlock the flat bonus and excess conversion.`);
+    messages.push(`Raise both speeds to ${CAP}% to unlock excess conversion.`);
   }
 
   if (totalEvo >= levelConfig.maxEvo - 0.001) {
