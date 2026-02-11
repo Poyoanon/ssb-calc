@@ -106,6 +106,11 @@ const getClassBaseBonus = () => {
     bonuses.ms += 12;
   }
 
+  if (classChoice === "soulfist") {
+    bonuses.as += 12;
+    bonuses.ms += 12;
+  }
+
   if (classChoice === "guardianknight") {
     bonuses.as += 15;
   }
@@ -128,6 +133,10 @@ const getClassBaseBonus = () => {
   if (classChoice === "sharpshooter") {
     bonuses.as += 10;
     bonuses.ms += 10;
+  }
+
+  if (classChoice === "shadowhunter") {
+    bonuses.ms += 30;
   }
 
   return bonuses;
